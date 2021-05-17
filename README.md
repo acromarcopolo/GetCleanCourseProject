@@ -27,7 +27,7 @@ are:
 | subject_test               | test/**subject_test.txt**             | subject IDs of the test set (all rows)      |
 | out_file                   | **TrainTest.MeanStdev.txt**           | tidy dataset produced by the script         |
 
-<a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones" class="uri">Click here for the full description of the data.</a>
+<a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones" class="uri">Click here for the full description of the data, including units, etc.</a>
 
 ------------------------------------------------------------------------
 
@@ -106,4 +106,5 @@ sets) subject IDs for each observation (in `add_subjects()`)
 > subjects in the test set
 >
 > RETURNS: the reduced tidy tibble, with individual subject IDs added,
-> and each variable averaged for each activity and each subject.
+> and each variable averaged for each activity and each subject. Units
+> are the same as the original averaged values.
