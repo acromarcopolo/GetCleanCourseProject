@@ -1,6 +1,6 @@
 ==================================================================
 "Getting & Cleaning Data Course Project" (Coursera.com)
-Is my work for week4's peer-graded assignement, based on the 
+This is my work for week4's peer-graded assignement, based on the 
 Dataset described below
 ==================================================================
 Human Activity Recognition Using Smartphones Dataset

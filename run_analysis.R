@@ -98,26 +98,33 @@ relabel_variables <- function( mytbl ){
 
 
 ########################################################################
-# Task #5.  From the data set in step 4, creates a second, independent 
-#           tidy data set with the average of each variable for each 
-#           activity and each subject.
+# Task #5. From the data set in step 4, creates a second, independent 
+#          tidy data set with the average of each variable for each 
+#          activity and each subject.
 ########################################################################
-add_subjects <- function( mytbl, trainfile, testfile ){
+averageby_subject_activity <- function( mytbl, trainfile, testfile ){
   # Get row names, as subject IDs already aligned with data 
   subject_train <- fread( trainfile )
   subject_test <- fread( testfile )
   
-  # Pile up Subject IDs in same order as we did when merging train & test sets
+  # Pile up subject IDs in same order as when merging train & test sets
   subject_IDs <- rbind(subject_train, subject_test)
 
   # Ensure same length as  train & test sets
   stopifnot( length( subject_IDs$V1 ) == dim(mytbl)[1] )
 
-  # Insert column identifying the subject for each record, as new 1st column
-  mytbl %>% add_column( Subject = subject_IDs$V1, .before = 1)
+  mytbl %>% 
+    # Insert column identifying the subject for each record, as new 1st column
+    add_column( Subject = subject_IDs$V1, .before = 1) %>%
+    # Group variables by activity then by subject...
+    group_by( Activity , Subject ) %>%
+    # .. to calculate average "for each activity and each subject"
+    summarize(across( everything(), mean ))
 }
 
+########################################################################
 # Put it all together in final pipeline
+########################################################################
 final_tbl <-
   merge_traintest( "UCI HAR Dataset/train/X_train.txt",
                    "UCI HAR Dataset/test/X_test.txt" )  %>%
@@ -125,15 +132,14 @@ final_tbl <-
   set_activities( "UCI HAR Dataset/train/y_train.txt",
                   "UCI HAR Dataset/test/y_test.txt") %>%
   relabel_variables %>%
-  add_subjects( "UCI HAR Dataset/train/subject_train.txt", 
-                "UCI HAR Dataset/test/subject_test.txt") %>%
-  # Group variables by activity then by subject...
-  group_by( Activity , Subject ) %>%
-  # .. to calculate average "for each activity and each subject"
-  summarize(across( everything(), mean )) %>%
+  averageby_subject_activity( "UCI HAR Dataset/train/subject_train.txt", 
+                              "UCI HAR Dataset/test/subject_test.txt") %>%
   print
 
+
+########################################################################
 # Save in a tab delimited text file
+########################################################################
 out_file <- "TrainTest.MeanStdev.txt"
 fwrite( final_tbl, file=out_file, sep="\t" )
 cat( "Result tidy tibble written to file:",out_file,"\n" )

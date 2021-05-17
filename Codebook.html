@@ -11,7 +11,7 @@
 
 <meta name="author" content="Marc Bauchet" />
 
-<meta name="date" content="2021-05-15" />
+<meta name="date" content="2021-05-17" />
 
 <title>codebook.Rmd</title>
 
@@ -167,7 +167,7 @@ pre code {
 
 <h1 class="title toc-ignore">codebook.Rmd</h1>
 <h4 class="author">Marc Bauchet</h4>
-<h4 class="date">15 May 2021</h4>
+<h4 class="date">17 May 2021</h4>
 
 </div>
 
@@ -176,102 +176,121 @@ pre code {
 </p>
 <div id="script-name-run_analysis.r" class="section level2">
 <h2><strong>Script Name:</strong> <em>run_analysis.R</em></h2>
+<hr />
 <div id="data-sets" class="section level3">
 <h3>Data Sets</h3>
 <p>Project data can be manually downloaded &amp; unzipped <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" class="uri">from here.</a></p>
 <p>Based on the unzipped data file, the files used by <strong><em>run_analysis.R</em></strong> are:</p>
-<table style="width:97%;">
+<table>
 <colgroup>
-<col width="16%" />
-<col width="27%" />
-<col width="52%" />
+<col width="22%" />
+<col width="43%" />
+<col width="34%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>A ssociated R variable name</th>
-<th>File in “UCI HAR Dataset” folder</th>
-<th>Content</th>
+<th>Associated R variable name</th>
+<th>File name in “UCI HAR Dataset” folder</th>
+<th>File content</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>train_tbl</td>
-<td>trai n/<strong>X_train.txt</strong></td>
-<td>training set, 300+ obs. per each 21 subjects</td>
+<td>train/<strong>X_train.txt</strong></td>
+<td>training set, 300+ obs. / each 21 subjects</td>
 </tr>
 <tr class="even">
 <td>test_tbl</td>
-<td>te st/<strong>X_test.txt</strong></td>
-<td>test set, 300+ obs. per each 9 subjects</td>
+<td>test/<strong>X_test.txt</strong></td>
+<td>test set, 300+ obs. / each 9 subjects</td>
 </tr>
 <tr class="odd">
-<td>(fea turefile)</td>
+<td>(featurefile)</td>
 <td><strong>features.txt</strong></td>
 <td>array of 561 names for each variable</td>
 </tr>
 <tr class="even">
-<td>(t rainfile)</td>
-<td>trai n/<strong>y_train.txt</strong></td>
+<td>(trainfile)</td>
+<td>train/<strong>y_train.txt</strong></td>
 <td>activity IDs of the training set (all rows)</td>
 </tr>
 <tr class="odd">
-<td>( testfile)</td>
-<td>te st/<strong>y_test.txt</strong></td>
+<td>(testfile)</td>
+<td>test/<strong>y_test.txt</strong></td>
 <td>activity IDs of the test set (all rows)</td>
 </tr>
 <tr class="even">
-<td>subj ect_train</td>
-<td>train/<strong>su bject_train.txt</strong></td>
+<td>subject_train</td>
+<td>train/<strong>subject_train.txt</strong></td>
 <td>subject IDs of the training set (all rows)</td>
 </tr>
 <tr class="odd">
-<td>sub ject_test</td>
-<td>test/<strong>s ubject_test.txt</strong></td>
+<td>subject_test</td>
+<td>test/<strong>subject_test.txt</strong></td>
 <td>subject IDs of the test set (all rows)</td>
 </tr>
 <tr class="even">
 <td>out_file</td>
-<td><strong>TrainTes t.MeanStdev.txt</strong></td>
+<td><strong>TrainTest.MeanStdev.txt</strong></td>
 <td>tidy dataset produced by the script</td>
 </tr>
 </tbody>
 </table>
 <p><a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones" class="uri">Click here for the full description of the data.</a></p>
+<hr />
 </div>
 <div id="main-variables" class="section level3">
 <h3>Main Variables</h3>
-<p><strong>final_tbl</strong> (a tibble: 180 x 68): final tidy data set as per task #5, with the average of each variable for each activity and each subject.</p>
-<p><strong>activity_IDs</strong></p>
-<p><strong>activity_names</strong></p>
-<p><strong>meanstd_colnames_desc</strong></p>
-<p><strong>subject_IDs</strong></p>
+<p><strong><code>final_tbl</code></strong> (a tibble: 180 x 68): final tidy data set as per task #5, with the average of each variable for each activity and each subject.</p>
+<p><strong><code>activity_IDs</code></strong> 1 column data table of concatenated (training + test sets) activity IDs for each observation (in <code>set_activities()</code>)</p>
+<p><strong><code>activity_names</code></strong> character array of activity names, translated from <strong><code>activity_IDs</code></strong> (in <code>set_activities()</code>)</p>
+<p><strong><code>meanstd_colnames_desc</code></strong> descriptive variable names for column labels (in <code>relabel_variables()</code>)</p>
+<p><strong><code>subject_IDs</code></strong> 1 column data table of concatenated (training + test sets) subject IDs for each observation (in <code>add_subjects()</code>)</p>
+<hr />
 </div>
 <div id="functions" class="section level3">
 <h3>Functions</h3>
 <div id="merge_traintest-trainfile-testfile" class="section level4">
-<h4>merge_traintest( trainfile, testfile )</h4>
-<p>trainfile:</p>
-<p>textfile:</p>
+<h4><code>merge_traintest( trainfile, testfile )</code></h4>
+<blockquote>
+<p><code>trainfile</code>: text file name (full path) with all observations for subjects in the training set</p>
+<p><code>textfile</code>: text file name (full path) with all observations for subjects in the test set</p>
+<p>RETURNS: Stacked up the rows of the training and test sets</p>
+</blockquote>
 </div>
-<div id="relabel_variables-mytbl" class="section level4">
-<h4>relabel_variables( mytbl )</h4>
-<p>mytbl:</p>
+<div id="extract_meanstd-mytbl-featurefile" class="section level4">
+<h4><code>extract_meanstd( mytbl, featurefile )</code></h4>
+<blockquote>
+<p><code>mytbl</code>: input tibble, whose variable (column) names will be extracted based on keywords mean() and std().</p>
+<p><code>featurefile</code>: text file name (full path) with all variable names (columns)</p>
+<p>RETURNS: tibble with same observations as input, but only variables containing “mean()” and “std()”, because only they contain BOTH “mean and standard deviation for each measurement”. But this is subject to interpretation, and using keywords “mean” and “Mean” would retrieve more columns.</p>
+</blockquote>
 </div>
 <div id="set_activities-mytbl-trainfile-testfile" class="section level4">
-<h4>set_activities( mytbl, trainfile, testfile )</h4>
-<p>mytbl:</p>
-<p>trainfile:</p>
-<p>textfile:</p>
+<h4><code>set_activities( mytbl, trainfile, testfile )</code></h4>
+<blockquote>
+<p><code>mytbl</code>: input tibble, where activity column is to be added.</p>
+<p><code>trainfile</code>: text file name (full path) with all activity IDs for subjects in the training set</p>
+<p><code>textfile</code>: text file name (full path) with all activity IDs for subjects in the test set</p>
+<p>RETURNS: the tibble, with activity labels added as 1st column</p>
+</blockquote>
 </div>
-<div id="relabel_variables-mytbl-1" class="section level4">
-<h4>relabel_variables( mytbl )</h4>
-<p>mytbl</p>
+<div id="relabel_variables-mytbl" class="section level4">
+<h4><code>relabel_variables( mytbl )</code></h4>
+<blockquote>
+<p><code>mytbl</code>: input tibble, whose variable (column) names will be modified</p>
+<p>RETURNS: the tibble, with more descriptive variable (column) names</p>
+</blockquote>
 </div>
-<div id="add_subjects-mytbl-trainfile-testfile" class="section level4">
-<h4>add_subjects( mytbl, trainfile, testfile )</h4>
-<p>mytbl:</p>
-<p>trainfile:</p>
-<p>testfile:</p>
+<div id="averageby_subject_activity-mytbl-trainfile-testfile" class="section level4">
+<h4><code>averageby_subject_activity( mytbl, trainfile, testfile )</code></h4>
+<blockquote>
+<p><code>mytbl</code>: input tibble, without subject IDs</p>
+<p><code>trainfile</code>: text file name (full path) with all subject IDs for subjects in the training set</p>
+<p><code>testfile</code>: text file name (full path) with all subject IDs for subjects in the test set</p>
+<p>RETURNS: the reduced tidy tibble, with individual subject IDs added, and each variable averaged for each activity and each subject.</p>
+</blockquote>
 </div>
 </div>
 </div>
