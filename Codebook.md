@@ -1,20 +1,8 @@
----
-title: "codebook.md"
-author: "Marc Bauchet"
-date: "17 May 2021"
-output:
-  html_document: default
-  pdf_document: default
-editor_options:
-  markdown:
-    wrap: 72
----
-
 This code book explains the data, variables and functions used in
-*run_analysis.R* script for Coursera's Data Cleaning course's week4
+*run_analysis.R* script for Coursera’s Data Cleaning course’s week4
 project. The functions described below are combined in the script into a
 pipeline that calculates the average of each variable for each activity
-and each subject.\
+and each subject.  
 
 ## **Script Name:** *run_analysis.R*
 
@@ -22,46 +10,24 @@ and each subject.\
 
 ### Data Sets
 
-Project data can be manually downloaded & unzipped [from
-here.](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip){.uri}
+Project data can be manually downloaded & unzipped
+<a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" class="uri">from here.</a>
 
 Based on the unzipped data file, the files used by ***run_analysis.R***
 are:
 
-+---------------+------------------------------+------------------------+
-| Associated R  | File name in "UCI HAR        | File content           |
-| variable name | Dataset" folder              |                        |
-+===============+==============================+========================+
-| train_tbl     | train/**X_train.txt**        | training set, 300+     |
-|               |                              | obs. / each 21         |
-|               |                              | subjects               |
-+---------------+------------------------------+------------------------+
-| test_tbl      | test/**X_test.txt**          | test set, 300+ obs. /  |
-|               |                              | each 9 subjects        |
-+---------------+------------------------------+------------------------+
-| (featurefile) | **features.txt**             | array of 561 names for |
-|               |                              | each variable          |
-+---------------+------------------------------+------------------------+
-| (trainfile)   | train/**y_train.txt**        | activity IDs of the    |
-|               |                              | training set (all      |
-|               |                              | rows)                  |
-+---------------+------------------------------+------------------------+
-| (testfile)    | test/**y_test.txt**          | activity IDs of the    |
-|               |                              | test set (all rows)    |
-+---------------+------------------------------+------------------------+
-| subject_train | train/**subject_train.txt**  | subject IDs of the     |
-|               |                              | training set (all      |
-|               |                              | rows)                  |
-+---------------+------------------------------+------------------------+
-| subject_test  | test/**subject_test.txt**    | subject IDs of the     |
-|               |                              | test set (all rows)    |
-+---------------+------------------------------+------------------------+
-| out_file      | **TrainTest.MeanStdev.txt**  | tidy dataset produced  |
-|               |                              | by the script          |
-+---------------+------------------------------+------------------------+
+| Associated R variable name | File name in “UCI HAR Dataset” folder | File content                                |
+|----------------------------|---------------------------------------|---------------------------------------------|
+| train_tbl                  | train/**X_train.txt**                 | training set, 300+ obs. / each 21 subjects  |
+| test_tbl                   | test/**X_test.txt**                   | test set, 300+ obs. / each 9 subjects       |
+| (featurefile)              | **features.txt**                      | array of 561 names for each variable        |
+| (trainfile)                | train/**y_train.txt**                 | activity IDs of the training set (all rows) |
+| (testfile)                 | test/**y_test.txt**                   | activity IDs of the test set (all rows)     |
+| subject_train              | train/**subject_train.txt**           | subject IDs of the training set (all rows)  |
+| subject_test               | test/**subject_test.txt**             | subject IDs of the test set (all rows)      |
+| out_file                   | **TrainTest.MeanStdev.txt**           | tidy dataset produced by the script         |
 
-[Click here for the full description of the
-data.](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones){.uri}
+<a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones" class="uri">Click here for the full description of the data.</a>
 
 ------------------------------------------------------------------------
 
@@ -106,9 +72,9 @@ sets) subject IDs for each observation (in `add_subjects()`)
 > (columns)
 >
 > RETURNS: tibble with same observations as input, but only variables
-> containing "mean()" and "std()", because only they contain BOTH "mean
-> and standard deviation for each measurement". But this is subject to
-> interpretation, and using keywords "mean" and "Mean" would retrieve
+> containing “mean()” and “std()”, because only they contain BOTH “mean
+> and standard deviation for each measurement”. But this is subject to
+> interpretation, and using keywords “mean” and “Mean” would retrieve
 > more columns.
 
 #### `set_activities( mytbl, trainfile, testfile )`
