@@ -81,7 +81,7 @@ relabel_variables <- function( mytbl ){
   meanstd_colnames_desc <- gsub( "mean","Mean", meanstd_colnames_desc )
   meanstd_colnames_desc <- gsub( "std","Stdev", meanstd_colnames_desc )
   # Replace leading t/f by time/frequency, let "Activity" pass through:
-  tf <- tibble( t = "Time", f = "Freq" )
+  tf <- tibble( t = "time", f = "freq" )
   meanstd_colnames_desc <- 
     as.character(sapply(meanstd_colnames_desc, 
                         function(x){
@@ -140,7 +140,6 @@ final_tbl <-
 ########################################################################
 # Save in a tab delimited text file
 ########################################################################
-out_file <- "TrainTest.MeanStdev.txt"
-fwrite( final_tbl, file=out_file, sep="\t" )
-cat( "Result tidy tibble written to file:",out_file,"\n" )
-
+out_file <- "tidy_dataset.txt"
+write.table( final_tbl, file=out_file, row.name=FALSE) 
+cat( "Result tidy dataset written to file:",out_file,"\n" )
