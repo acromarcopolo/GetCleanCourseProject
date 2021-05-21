@@ -1,8 +1,11 @@
-This code book explains the data, variables and functions used in
+This README file explains the data and functions used in
 *run_analysis.R* script for Coursera’s Data Cleaning course’s week4
 project. The functions described below are combined in the script into a
 pipeline that calculates the average of each variable for each activity
 and each subject.  
+See *Codebook.md* for a description of *tidy_dataset.txt*, which is the output 
+data from *run_analysis.R*.
+
 
 ## **Script Name:** *run_analysis.R*
 
