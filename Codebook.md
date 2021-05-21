@@ -7,11 +7,17 @@ This code book doesn't describe the code from run_analysis.R but the columns nam
 ## Activity
 
 Laying: subject was laying down during the test
+
 Sitting: subject was sitting during the test
+
 Standing: subject was standing during the test
+
 Walking: subject was walking during the test
+
 WalkingDownstairs: was walking down a staircase during the test
+
 WalkingUpstairs: subject was walking up a staircase during the test
+
 
 ## Subject
 
